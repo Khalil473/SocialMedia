@@ -40,6 +40,7 @@ BUILT_IN_APPS = [
 ]
 CUSTOM_APPS = [
     "user_auth",
+    "user_profile",
 ]
 THIRD_PARTY_APPS = [
     "rest_framework",
@@ -139,3 +140,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "user_auth.User"
 AUTHENTICATION_BACKENDS = ["user_auth.auth_backend.EmailBackend"]
+
+MEDIA_ROOT = STATIC_ROOT + "/media"
+MEDIA_URL = "/media/"
