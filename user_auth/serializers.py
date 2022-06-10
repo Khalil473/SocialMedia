@@ -1,15 +1,13 @@
-from django.contrib.auth import authenticate, password_validation
+from django.contrib.auth import authenticate, get_user_model, password_validation
 from django.contrib.auth.hashers import make_password
 from django.core import exceptions
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from .models import User
-
 
 class UserSignUpSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ("email", "password", "first_name", "last_name")
 
     def create(self, validated_data):
@@ -17,7 +15,7 @@ class UserSignUpSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
     def validate(self, data):
-        user = User(**data)
+        user = get_user_model()(**data)
         password = data.get("password")
         errors = {}
         try:
@@ -45,7 +43,6 @@ class UserSignInSerializer(serializers.Serializer):
         if not (email and password):
             msg = _('Must include "email" and "password".')
             raise serializers.ValidationError(msg, code="authorization")
-        user: User = None
         user = authenticate(
             request=self.context.get("request"), email=email, password=password
         )

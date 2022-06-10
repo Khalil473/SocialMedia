@@ -32,7 +32,6 @@ class SignUpAPIView(APIView):
     def get(self, request):  # for testing
         demoData = {
             "password": "12ads34kyle",
-            "username": "kyle4e343",
             "first_name": "aaa",
             "last_name": "aaa",
             "email": "aaa33@aaa.com",
