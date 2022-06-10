@@ -11,8 +11,6 @@ from .serializers import UserSignInSerializer, UserSignUpSerializer
 
 class SignInAPIView(APIView):
     def post(self, request):
-        if request.user.is_authenticated:
-            return Response(data={"log out first"}, status=status.HTTP_403_FORBIDDEN)
         serializer = UserSignInSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data["user"]
@@ -23,8 +21,6 @@ class SignInAPIView(APIView):
 
 class SignUpAPIView(APIView):
     def post(self, request):
-        if request.user.is_authenticated:
-            return Response(data={"log out first"}, status=status.HTTP_403_FORBIDDEN)
         serializer = UserSignUpSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
