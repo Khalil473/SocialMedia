@@ -15,7 +15,7 @@ class SignInAPIView(APIView):
         if serializer.is_valid():
             user = serializer.validated_data["user"]
             token, created = Token.objects.get_or_create(user=user)
-            return Response({"token": token.key})
+            return Response({"token": token.key}, status=status.HTTP_200_OK)
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
