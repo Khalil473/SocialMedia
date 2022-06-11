@@ -13,10 +13,10 @@ def pretty_responce(response):
     return json.dumps(response.data, indent=4)
 
 
-def create_user(cli, email, password):
+def create_user(cli, **data):
     return cli.post(
         path="/auth/sign_up/",
-        data={"email": email, "password": password},
+        data=data,
         format="json",
     )
 
@@ -50,20 +50,20 @@ class SignUpTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_sign_up_post_weak_password(self):
-        response = create_user(self.cli, "kw@gmail.com", "12345")
+        response = create_user(self.cli, email="kw@gmail.com", password="12345")
         print("response of sign_up post request with weak password")
         print(pretty_responce(response))
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_sign_up_post_strong_password(self):
-        response = create_user(self.cli, "kw@gmail.com", "Aasdfasdk!@3")
+        response = create_user(self.cli, email="kw@gmail.com", password="Aasdfasdk!@3")
         print("response of sign_up post request with strong password")
         print(pretty_responce(response))
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_sign_up_post_duplicate_email(self):
-        create_user(self.cli, "kw@gmail.com", "aadas2!@3")
-        response = create_user(self.cli, "kw@gmail.com", "Aasdfasdk!@3")
+        create_user(self.cli, email="kw@gmail.com", password="aadas2!@3")
+        response = create_user(self.cli, email="kw@gmail.com", password="Aasdfasdk!@3")
         print("response of sign_up post request with duplicate_email")
         print(pretty_responce(response))
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -92,7 +92,7 @@ class LoginTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_login_right_creds(self):
-        create_user(self.cli, "aaa@aaa.com", "asdad@aamc4")
+        create_user(self.cli, email="aaa@aaa.com", password="asdad@aamc4")
         response = log_in(self.cli, "aaa@aaa.com", "asdad@aamc4")
         print("response of log_in post request with right credentials")
         print(pretty_responce(response))
