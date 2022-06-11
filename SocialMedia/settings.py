@@ -30,7 +30,7 @@ ALLOWED_HOSTS: list = []
 
 # Application definition
 
-INSTALLED_APPS = [
+BUILT_IN_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -38,6 +38,21 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 ]
+CUSTOM_APPS = [
+    "user_auth",
+]
+THIRD_PARTY_APPS = [
+    "rest_framework",
+    "rest_framework.authtoken",
+]
+
+INSTALLED_APPS = BUILT_IN_APPS + CUSTOM_APPS + THIRD_PARTY_APPS
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ]
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -121,3 +136,6 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "user_auth.User"
+AUTHENTICATION_BACKENDS = ["user_auth.auth_backend.EmailBackend"]
