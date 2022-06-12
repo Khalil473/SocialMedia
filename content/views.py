@@ -20,7 +20,10 @@ class PostCreate(generics.CreateAPIView):
     serializer_class = PostSerializers
 
     def create(self, request, *args, **kwargs):
+        _mutable = request.data._mutable
+        request.data._mutable = True
         request.data["owner"] = get_current_authenticated_user().pk
+        request.data._mutable = _mutable
         return super().create(request, *args, **kwargs)
 
 

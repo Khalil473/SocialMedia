@@ -17,7 +17,3 @@ class PostSerializers(serializers.ModelSerializer):
             "owner_email",
             "owner",
         )
-
-    def get_validation_exclusions(self):
-        exclusions = super().get_validation_exclusions()
-        return exclusions + ["owner"]
