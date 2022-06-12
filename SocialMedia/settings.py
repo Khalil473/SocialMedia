@@ -41,6 +41,7 @@ BUILT_IN_APPS = [
 CUSTOM_APPS = [
     "user_auth",
     "user_profile",
+    "content",
 ]
 THIRD_PARTY_APPS = [
     "rest_framework",
