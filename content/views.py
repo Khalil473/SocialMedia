@@ -55,5 +55,5 @@ class MyPosts(generics.ListAPIView):
     pagination_class = CustomPagination
 
     def get_queryset(self):
-        query = Post.get_posts_only().filter(owner=get_current_authenticated_user())
+        query = get_current_authenticated_user().post_set.all()
         return query
