@@ -30,6 +30,7 @@ class PostCreate(generics.CreateAPIView):
 class PostSearch(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = PostSerializers
+    pagination_class = CustomPagination
 
     def get_queryset(self):
         title = self.request.query_params.get("title")
@@ -45,4 +46,14 @@ class PostSearch(generics.ListAPIView):
             query = query.filter(owner__first_name=first_name)
         if last_name:
             query = query.filter(owner__last_name=last_name)
+        return query
+
+
+class MyPosts(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializers
+    pagination_class = CustomPagination
+
+    def get_queryset(self):
+        query = Post.get_posts_only().filter(owner=get_current_authenticated_user())
         return query
