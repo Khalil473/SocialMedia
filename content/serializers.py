@@ -17,4 +17,11 @@ class PostSerializers(serializers.ModelSerializer):
             "modified",
             "owner_email",
             "owner",
+            "to_post",
         )
+
+
+class ReactionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reaction
+        fields = ("reaction", "to_post", "reacted_by")
