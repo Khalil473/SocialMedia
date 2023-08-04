@@ -40,6 +40,8 @@ BUILT_IN_APPS = [
 ]
 CUSTOM_APPS = [
     "user_auth",
+    "user_profile",
+    "content",
 ]
 THIRD_PARTY_APPS = [
     "rest_framework",
@@ -53,8 +55,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
     ]
 }
-
-MIDDLEWARE = [
+BUILT_IN_MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -63,6 +64,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+THIRD_PARTY_MIDDLEWARE = [
+    "django_currentuser.middleware.ThreadLocalUserMiddleware",
+]
+
+MIDDLEWARE = BUILT_IN_MIDDLEWARE + THIRD_PARTY_MIDDLEWARE
 
 ROOT_URLCONF = "SocialMedia.urls"
 
@@ -139,3 +146,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "user_auth.User"
 AUTHENTICATION_BACKENDS = ["user_auth.auth_backend.EmailBackend"]
+
+MEDIA_ROOT = STATIC_ROOT + "/media"
+MEDIA_URL = "/media/"

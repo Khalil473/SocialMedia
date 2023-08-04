@@ -6,6 +6,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from user_profile.models import Profile
+
 from .serializers import UserSignInSerializer, UserSignUpSerializer
 
 
@@ -43,3 +45,5 @@ class SignUpAPIView(APIView):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+        user_profile = Profile(user=instance)
+        user_profile.save()
